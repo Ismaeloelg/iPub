@@ -17,10 +17,16 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    const ROLE_USER = 'user';
+    const ROLE_ADMIN = 'admin';
+
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role',
+        'avatar'
     ];
 
     /**
@@ -44,5 +50,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
     }
 }

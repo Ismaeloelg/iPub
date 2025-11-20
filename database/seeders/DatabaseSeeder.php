@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
                 ]);
         }
 
-        User::factory(15)->create();
+        User::factory(3)->create();
         User::create([
             'name' => 'Noadmin',
             'password' => '1075',

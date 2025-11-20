@@ -17,10 +17,10 @@
 
     @endforeach
     {{--USUARIO SELECCIONADO--}}
-    <flux:modal name="user-selection" :show="$showUserModal" wire:model="showUserModal"
+    <flux:modal name="user-selection" wire:model="showUserModal"
                 overlay-class="bg-black bg-opacity-70 backdrop-blur-lg ">
         @if($selectedUser)
-            <div class="bg-red-200  shadow-lg rounded-full w-86 m-6 ">
+            <div class="bg-blue-200 shadow-lg rounded-full w-86 m-6 ">
                 <p>
                     <img src="{{ $selectedUser->avatar ?? asset('images/default_avatar.png') }}" alt="Avatar"
                          class="rounded-full shadow-black border-3 shadow-2xl">
@@ -38,7 +38,6 @@
                 <p class="{{ session('success') ? ' text-green-800 ' : (session('error') ? 'text-red-400 ' : '') }} px-4 py-3 rounded my-2">
                     {{ session('success') ?? session('error') }}
                 </p>
-
 
             </div>
         @endif
