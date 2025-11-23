@@ -13,21 +13,26 @@ Route::view('/home', 'home')
     ->name('home');
 
 Route::view('/stock', 'stock')
-    ->middleware('auth')
+    ->middleware('auth', 'role:admin')
     ->name('stock');
 
 Route::view('/show/stock', 'showStock')
-    ->middleware('auth')
+    ->middleware('auth', 'role:admin')
     ->name('showStock');
 
 Route::get('/edit/{productoId}/stock', EditStockComponent::class)
-    ->middleware('auth')
+    ->middleware('auth', 'role:admin')
     ->name('editStock');
 
 Route::view('/categoria', 'categoria')
-    ->middleware('auth')
+    ->middleware('auth', 'role:admin')
     ->name('categoria');
 
 Route::get('/comanda/{mesa}', ComandaComponent::class)
     ->middleware('auth')
     ->name('comanda');
+
+Route::get('/logout', function () {
+    session()->forget('logged_user_id');
+    return redirect()->route('welcome');
+})->name('logout');

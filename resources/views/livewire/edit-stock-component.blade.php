@@ -1,7 +1,7 @@
 <div>
 
-    <form wire:submit.prevent="guardarProducto" class="rounded-2xl shadow-2xl w-1/2 m-auto p-12 space-y-5 font-medium">
-        <h1 class="text-4xl font-extrabold">Insertar Producto en el Stock</h1>
+    <form wire:submit.prevent="guardarProducto" class="rounded-2xl shadow-2xl w-1/2 m-auto p-12 space-y-5 font-medium bg-white">
+        <h1 class="text-4xl font-extrabold">Editar Producto en el Stock</h1>
         <div>
             <label class="block">Nombre Producto</label>
             <input type="text" wire:model="nombre"
