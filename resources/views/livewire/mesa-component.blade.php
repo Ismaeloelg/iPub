@@ -1,6 +1,8 @@
 <div>
-    <div class="text-3xl font-bold  text-center sticky top-0 ">Sala</div>
-    <div class="grid grid-cols-5 gap-6 justify-center overflow-y-auto max-h-155 p-1 rounded-4xl">
+    <div class="text-3xl font-bold text-white text-center sticky top-0 py-1 bg-gray-700 p-5 shadow-lg rounded z-10">
+        Sala
+    </div>
+    <div class="grid grid-cols-5 gap-6 p-5 rounded-4xl ">
         @foreach($mesas as $mesa)
             <div wire:click="abrirMesa({{ $mesa->id }})"
                  class="cursor-pointer p-5 rounded-4xl shadow-lg transition-transform transform hover:scale-105

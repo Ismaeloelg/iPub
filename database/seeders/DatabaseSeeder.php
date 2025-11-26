@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Mesa::factory(10)->create();
+        Mesa::factory(20)->create();
         $categorias = Categoria::factory(10)->create();
 
         foreach ($categorias as $categoria) {

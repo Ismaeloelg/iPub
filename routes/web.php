@@ -28,6 +28,14 @@ Route::view('/categoria', 'categoria')
     ->middleware('auth', 'role:admin')
     ->name('categoria');
 
+Route::view('/profile', 'profile')
+    ->middleware('auth')
+    ->name('profile');
+
+Route::view('/managerProfile', 'manager-profiles')
+    ->middleware('auth', 'role:admin')
+    ->name('manager-profile');
+
 Route::get('/comanda/{mesa}', ComandaComponent::class)
     ->middleware('auth')
     ->name('comanda');
