@@ -14,6 +14,8 @@ class MesaComponent extends Component
         $this->mesas = Mesa::with('comandas')->get();
     }
 
+
+
     protected $listeners = ['mesaCerrada' => 'recargarMesas'];
 
     public function recargarMesas($mesaId)
@@ -27,7 +29,7 @@ class MesaComponent extends Component
     {
         $mesa = Mesa::find($mesaId);
         if ($mesa) {
-            $mesa->estado = 'abierta';
+            $mesa->estado = 'ocupada';
             $mesa->save();
             $this->mesas = Mesa::all();
 

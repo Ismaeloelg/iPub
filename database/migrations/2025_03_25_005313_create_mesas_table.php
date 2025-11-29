@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('mesas', function (Blueprint $table) {
             $table->id();
-            $table->enum('estado', ['abierta','pendiente', 'cerrada'])->default('cerrada');
-            $table->float('aPagar');
+            $table->enum('estado', ['libre', 'ocupada'])->default('libre');
+            $table->float('aPagar')->default(0);
             $table->enum('formaPago', ['efectivo', 'tarjeta'])->default('efectivo');
             $table->timestamps();
         });

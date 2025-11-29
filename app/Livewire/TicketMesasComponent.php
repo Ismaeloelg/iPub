@@ -10,6 +10,7 @@ class TicketMesasComponent extends Component
 {
     public $ticketId;
     public $ticket;
+    public $total = 0;
 
     protected $listeners = [
         'ticketActualizado' => 'cargarTicket',
@@ -24,15 +25,35 @@ class TicketMesasComponent extends Component
     public function cargarTicket()
     {
         $this->ticket = TicketMesa::with('mesa.comandas.stock')->find($this->ticketId);
-
-        // Actualizar total dinámicamente
         if ($this->ticket && $this->ticket->mesa) {
-            $this->ticket->update([
-                'total' => $this->ticket->mesa->comandas->sum(fn($c) => $c->precio * $c->cantidad)
-            ]);
+            $this->calcularTotales();
+
+            $this->ticket->update(['total' => $this->total]);
+
+            $this->ticket->mesa->update(['aPagar' => $this->total]);
+
             $this->ticket->refresh();
         }
+
     }
+
+    public $comandasConSubtotal; // nueva propiedad
+
+    public function calcularTotales()
+    {
+        $this->total = 0;
+
+        // Transformamos la colección y guardamos en una variable temporal
+        $this->comandasConSubtotal = $this->ticket->mesa->comandas->map(function ($comanda) {
+            $comanda->subtotal = $comanda->precio * $comanda->cantidad;
+            $this->total += $comanda->subtotal;
+            return $comanda;
+        });
+    }
+
+
+
+
 
     public function actualizarTicket()
     {
@@ -69,6 +90,8 @@ class TicketMesasComponent extends Component
         $this->cargarTicket();
         // Eliminar las comandas de la mesa
         $mesa->comandas()->delete();
+        $mesa->estado = 'libre';
+        $mesa->save();
         $this->redirect(route('home'));
     }
 

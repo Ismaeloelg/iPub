@@ -9,10 +9,8 @@
                         {{ $mesa->comandas->isNotEmpty() ? 'bg-red-400 text-white' : 'bg-green-600 text-white' }}
                         flex flex-col justify-between items-center">
 
-                <!-- Número de mesa -->
                 <h2 class="text-xl font-bold mb-2">Mesa #{{ $mesa->id }}</h2>
 
-                <!-- Estado visual -->
                 <span class="text-sm mb-2 px-3 py-1 rounded-full font-semibold
                              {{ $mesa->comandas->isNotEmpty() ? 'bg-red-600' : 'bg-green-700' }}">
                     {{ $mesa->comandas->isNotEmpty() ? 'Ocupada' : 'Libre' }}
@@ -20,7 +18,7 @@
 
                 <!-- Productos y total -->
                 <p class="text-sm mb-1">Productos: <strong>{{ $mesa->comandas->count() }}</strong></p>
-                <p class="text-sm mb-1">Total: <strong>${{ number_format($mesa->total ?? 0, 2) }}</strong></p>
+                <p class="text-sm mb-1">Total: <strong>{{$mesa->aPagar}}</strong></p>
 
                 <!-- Forma de pago opcional -->
                 @if($mesa->forma_pago)

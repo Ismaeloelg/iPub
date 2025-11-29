@@ -19,6 +19,8 @@
         <a href="{{ route('welcome') }}" class="text-4xl font-extrabold text-blue-400 hover:text-blue-500 transition">iPub2</a>
 
         @if($user)
+
+            <a href="{{route('home')}}" class="block px-4 py-2 text-white hover:bg-blue-700 hover:h-1/4">Sala</a>
             <div class="relative">
                 <!-- Botón del avatar + nombre -->
                 <button id="userButton" class="flex items-center space-x-2 focus:outline-none">
@@ -26,6 +28,7 @@
                     <img src="{{ $user->avatar ?? asset('images/default_avatar.png') }}" alt="Avatar"
                          class="w-10 h-10 rounded-full border-2 border-white">
                 </button>
+
 
                 <!-- Dropdown oculto por defecto -->
                 <div id="userDropdown"

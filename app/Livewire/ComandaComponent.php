@@ -113,6 +113,8 @@ class ComandaComponent extends Component
         $this->pantalla = $pantalla;
     }
 
+
+
     public function limpiarEstadoTicket($ticketId)
     {
         $this->ticket = null;
@@ -147,6 +149,9 @@ class ComandaComponent extends Component
                 ->get();
         }
     }
+
+
+
 
 
     public function render()

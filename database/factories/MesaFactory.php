@@ -17,9 +17,6 @@ class MesaFactory extends Factory
     public function definition(): array
     {
         return [
-            'estado' => $this->faker->randomElement(['abierta', 'pendiente', 'cerrada']),
-            'aPagar' => $this->faker->randomFloat(2, 3, 200),
-            'formaPago' => $this->faker->randomElement(['efectivo', 'tarjeta'])
         ];
     }
 }

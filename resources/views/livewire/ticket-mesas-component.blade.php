@@ -13,20 +13,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                @php $total = 0; @endphp
-                @foreach($ticket->mesa->comandas as $comanda)
-                    @php
-                        $subtotal = $comanda->precio * $comanda->cantidad;
-                        $total += $subtotal;
-                    @endphp
+                @foreach($comandasConSubtotal as $comanda)
                     <tr class="border-b hover:bg-gray-50">
                         <td class="py-2">{{ $comanda->stock->nombre ?? '—' }}</td>
                         <td class="py-2 text-center">{{ $comanda->cantidad }}</td>
                         <td class="py-2 text-right">${{ number_format($comanda->precio, 2) }}</td>
                         <td class="py-2 text-right font-semibold">
-                            ${{ number_format($subtotal, 2) }}</td>
+                            ${{ number_format($comanda->subtotal, 2) }}
+                        </td>
                     </tr>
                 @endforeach
+
                 </tbody>
                 <tfoot>
                 <tr class="border-t font-bold">
@@ -36,6 +33,7 @@
                 </tfoot>
             </table>
         </div>
+
         <div class="mt-4">
             <button wire:click="cerrarMesa"
                     class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 sticky top-0">
