@@ -75,6 +75,15 @@
                 Comandas registradas
             </h3>
 
+            <div class="hidden md:flex font-semibold text-gray-400 border-b border-gray-700 pb-2 mb-2 text-2xl font-semibold m-auto mb-4 sticky top-0 bg-gray-50 shadow w-full rounded-3xl p-5 text-center">
+                <div class="w-1/12">ID</div>
+                <div class="w-3/12">Producto</div>
+                <div class="w-2/12">Cantidad</div>
+                <div class="w-3/12">Notas</div>
+                <div class="w-2/12">Usuario</div>
+                <div class="w-1/12">Hora</div>
+                <div class="w-1/12">Acciones</div>
+            </div>
             <div class="grid gap-4">
                 @forelse($comandas as $comanda)
                     @livewire('edit-comanda-component', ['comanda' => $comanda], key($comanda->id))
@@ -85,4 +94,15 @@
         </div>
 
     @endif
+    @if (session()->has('mensaje'))
+        <div
+            x-data="{ show: true }"
+            x-init="setTimeout(() => show = false, 1500)"
+            x-show="show"
+            class="mt-4 p-3 bg-green-700 text-green-100 rounded-lg text-sm"
+        >
+            {{ session('mensaje') }}
+        </div>
+    @endif
+
 </div>

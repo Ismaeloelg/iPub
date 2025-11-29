@@ -10,69 +10,102 @@ class EditComandaComponent extends Component
     public Comanda $comanda;
 
     public $editando = false;
-    public $cantidad;
-    public $notas;
+    public $cantidades = [];   // Array para manejar cantidad editable
+    public $notasArray = [];   // Array para manejar notas editables
+
+    protected $listeners = [
+        'refreshComponent' => '$refresh'
+    ];
 
     public function mount(Comanda $comanda)
     {
         $this->comanda = $comanda;
-        $this->cantidad = $comanda->cantidad;
-        $this->notas = $comanda->notas;
+        $this->cantidades[$comanda->id] = $comanda->cantidad;
+        $this->notasArray[$comanda->id] = $comanda->notas ?? '';
     }
 
-    public function incrementarCantidad()
+    /**
+     * Método privado para actualizar cantidad y stock
+     */
+    private function actualizarCantidadYStock($nuevoValor)
     {
-        $this->cantidad++;
-    }
+        $comanda = $this->comanda;
+        $stock = $comanda->stock;
 
-    public function decrementarCantidad()
-    {
-        if ($this->cantidad > 0) {
-            $this->cantidad--;
-        }
-    }
-
-
-    public function actualizar()
-    {
-        $this->validate([
-            'cantidad' => 'required|integer|min:1',
-            'notas' => 'nullable|string|max:255',
-        ]);
-
-        $stock = $this->comanda->stock;
-
-        $cantidadAnterior = $this->comanda->cantidad;
-        $diferencia = $this->cantidad - $cantidadAnterior;
+        $cantidadAnterior = $comanda->cantidad;
+        $diferencia = $nuevoValor - $cantidadAnterior;
 
         if ($diferencia > 0) {
-            // Quiero aumentar la cantidad, verifico stock
             if ($stock->unidades < $diferencia) {
-                session()->flash('mensaje', 'No hay suficiente stock disponible para aumentar la cantidad.');
-                return;
+                session()->flash('mensaje', 'No hay suficiente stock disponible.');
+                // Revertir cantidad en el input
+                $this->cantidades[$comanda->id] = $cantidadAnterior;
+                return false;
             }
-
-            $stock->unidades -= $diferencia;
+            $stock->decrement('unidades', $diferencia);
         } elseif ($diferencia < 0) {
-            // Disminuyo cantidad, devuelvo al stock
-            $stock->unidades += abs($diferencia);
+            $stock->increment('unidades', abs($diferencia));
         }
 
         $stock->save();
+        $comanda->update(['cantidad' => $nuevoValor]);
 
-        // Actualizar la comanda
-        $this->comanda->update([
-            'cantidad' => $this->cantidad,
-            'notas' => $this->notas,
-        ]);
-
-        $this->editando = false;
-
-        session()->flash('mensaje', 'Comanda actualizada correctamente.');
-
+        $this->dispatch('comandaEditada'); // Refrescar productos en el padre
+        return true;
     }
 
+    /**
+     * Incrementar cantidad con botón
+     */
+    public function incrementarCantidad($id)
+    {
+        $nuevoValor = $this->cantidades[$id] + 1;
+        $this->cantidades[$id] = $nuevoValor;
+        $this->actualizarCantidadYStock($nuevoValor);
+    }
 
+    /**
+     * Disminuir cantidad con botón
+     */
+    public function decrementarCantidad($id)
+    {
+        $nuevoValor = max(0, $this->cantidades[$id] - 1);
+        $this->cantidades[$id] = $nuevoValor;
+        $this->actualizarCantidadYStock($nuevoValor);
+    }
+
+    /**
+     * Guardar cantidad desde input (Enter)
+     */
+    public function guardarCantidad($id)
+    {
+        $nuevoValor = intval($this->cantidades[$id]);
+        $this->actualizarCantidadYStock($nuevoValor);
+        session()->flash('mensaje', 'Cantidad guardada correctamente.');
+    }
+
+    /**
+     * Guardar nota
+     */
+    public function guardarNota($id)
+    {
+        $this->validate([
+            "notasArray.$id" => 'nullable|string|max:255',
+        ]);
+
+        $comanda = $this->comanda;
+        $comanda->update([
+            'notas' => $this->notasArray[$id],
+        ]);
+
+        $this->dispatch('comandaEditada');
+        $this->notasArray[$id] = '';
+        session()->flash('mensaje', 'Nota guardada correctamente.');
+    }
+
+    /**
+     * Eliminar comanda
+     */
     public function eliminar()
     {
         $stockId = $this->comanda->stock_id;
@@ -80,16 +113,12 @@ class EditComandaComponent extends Component
 
         $this->comanda->delete();
 
-        // Emitir evento al padre con stockId y cantidad
-        $this->dispatch('comandaEliminada', stockId: $stockId, cantidad: $cantidad);
-
+        $this->dispatch('comandaEliminada', $stockId, $cantidad);
         session()->flash('mensaje', 'Comanda eliminada correctamente.');
     }
 
-
     public function render()
     {
-
         return view('livewire.edit-comanda-component');
     }
 }

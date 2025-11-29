@@ -21,7 +21,7 @@ class ComandaComponent extends Component
     public $stockId;
     public $cantidad;
     public $notas;
-    public $pantalla = 'comanda';
+    public $pantalla = 'registrada';
 
 
 
@@ -78,6 +78,11 @@ class ComandaComponent extends Component
 
         if (!$stock) return;
 
+        // Validar que hay stock disponible
+        if ($stock->unidades < 1) {
+            session()->flash('mensaje', "No hay stock disponible para este producto.");
+            return;
+        }
 
         $comandaExistente = Comanda::where('mesa_id', $this->mesa->id)
             ->where('stock_id', $stockId)
@@ -97,16 +102,15 @@ class ComandaComponent extends Component
             ]);
         }
 
-
         $stock->decrement('unidades');
 
         $this->obtenerComandas();
         $this->refrescarProductosFiltrados();
-        // Avisar al ticket para refrescar
         $this->dispatch('ticketActualizado');
 
         $this->reset(['stockId', 'cantidad', 'notas']);
     }
+
 
     public function obtenerComandas()
     {
