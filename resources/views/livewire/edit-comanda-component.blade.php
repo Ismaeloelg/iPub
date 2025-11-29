@@ -27,6 +27,7 @@
         <p><strong>Producto:</strong> {{ $comanda->stock->nombre ?? '—' }}</p>
         <p><strong>Cantidad:</strong> {{ $comanda->cantidad }}</p>
         <p><strong>Notas:</strong> {{ $comanda->notas }}</p>
+        <p><strong>Notas:</strong> {{ $comanda->user->name }}</p>
         <p><strong>Hora:</strong>
             {{ $comanda->updated_at->ne($comanda->created_at)
                 ? $comanda->updated_at->format('H:i')

@@ -23,6 +23,9 @@ class ComandaComponent extends Component
     public $notas;
     public $pantalla = 'comanda';
 
+
+
+
     protected $listeners = [
         'comandaEliminada' => 'actualizarProductosEliminado',
         'comandaEditada' => 'actualizarProductosEditado',
@@ -70,6 +73,7 @@ class ComandaComponent extends Component
 
     public function agregarProducto($stockId)
     {
+        $usuarioId = session('logged_user_id');
         $stock = Stock::find($stockId);
 
         if (!$stock) return;
@@ -89,6 +93,7 @@ class ComandaComponent extends Component
                 'cantidad' => 1,
                 'precio' => $stock->precio_venta,
                 'notas' => $this->notas,
+                'user_id' => $usuarioId,
             ]);
         }
 
@@ -112,7 +117,6 @@ class ComandaComponent extends Component
     {
         $this->pantalla = $pantalla;
     }
-
 
 
     public function limpiarEstadoTicket($ticketId)
@@ -140,6 +144,7 @@ class ComandaComponent extends Component
     {
         $this->obtenerComandas();
     }
+
     private function refrescarProductosFiltrados()
     {
         if ($this->categoriaSeleccionada) {
@@ -149,9 +154,6 @@ class ComandaComponent extends Component
                 ->get();
         }
     }
-
-
-
 
 
     public function render()

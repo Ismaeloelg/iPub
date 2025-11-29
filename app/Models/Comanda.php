@@ -14,7 +14,7 @@ class Comanda extends Model
         'stock_id',
         'cantidad',
         'precio',
-        //'estado',
+        'user_id',
         'notas'
     ];
 
@@ -27,4 +27,10 @@ class Comanda extends Model
     {
         return $this->BelongsTo(Stock::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
