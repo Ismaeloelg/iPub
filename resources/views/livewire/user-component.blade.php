@@ -1,21 +1,27 @@
-<div class="bg-gray-800 shadow-2xl rounded-4xl pt-10 p-6 md:p-8 ">
+<div>
 
 
-<div class="flex flex-wrap gap-10  justify-center ">
+    <div class="text-5xl text-white m-10 text-center">Seleccione usuario</div>
+    <div class="flex flex-wrap gap-10 m-10 justify-center ">
+
 
         {{--USUARIO NO SELECCIONADO--}}
         @foreach($users->reverse() as $user)
             <div wire:click="selectUser({{$user->id}})"
-                 class="bg-gray-400 rounded-4xl w-48 h-68 text-black shadow-2xl border-1 m-2">
-                <div
-                    class="bg-blue-50 border-2 border-black rounded-full w-40 h-40 mx-auto items-center justify-center text-white flex flex-col mt-3">
-                    <img src="{{ $user->avatar ?? asset('images/default_avatar.png') }}" alt="Avatar"
-                         class="rounded-full">
-                </div>
-                <div class="flex flex-col items-center mt-5 font-bold">
-                    <p>{{$user->name}}</p>
+                 class="bg-gray-800 rounded-3xl transition duration-300 transform hover:scale-105 hover:border-black hover:shadow-xl hover:bg-gray-700 w-56 h-72 text-white shadow-lg border border-gray-600 m-4 cursor-pointer">
 
+                <!-- Avatar del usuario -->
+                <div
+                    class="bg-gradient-to-r from-blue-500 to-indigo-600 border-4 border-gray-900 rounded-full w-40 h-40 mx-auto items-center justify-center text-white flex flex-col mt-6 shadow-xl">
+                    <img src="{{ $user->avatar ?? asset('images/default_avatar.png') }}" alt="Avatar"
+                         class="rounded-full object-cover w-full h-full">
                 </div>
+
+                <!-- Nombre de usuario -->
+                <div class="flex flex-col items-center mt-4 font-semibold">
+                    <p class="text-lg">{{ $user->name }}</p>
+                </div>
+
             </div>
 
         @endforeach

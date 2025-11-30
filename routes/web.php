@@ -32,6 +32,10 @@ Route::view('/profile', 'profile')
     ->middleware('auth')
     ->name('profile');
 
+Route::view('/createUser', 'create-user')
+    ->middleware('auth', 'role:admin')
+    ->name('createUser');
+
 Route::view('/managerProfile', 'manager-profiles')
     ->middleware('auth', 'role:admin')
     ->name('manager-profile');

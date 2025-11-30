@@ -43,7 +43,7 @@
                             Productos</a>
                         <a href="{{ route('categoria') }}" class="block px-4 py-2 text-white hover:bg-green-700">Añadir
                             Categoria</a>
-                        <a href="#" class="block px-4 py-2 text-white hover:bg-yellow-600">Crear Usuario</a>
+                        <a href="{{route('createUser')}}" class="block px-4 py-2 text-white hover:bg-yellow-600">Crear Usuario</a>
                     @endif
                     <a href="{{ route('logout') }}" class="block px-4 py-2 text-white hover:bg-red-600">Cerrar
                         sesión</a>
@@ -55,7 +55,7 @@
 </header>
 
 
-<main class="m-3">
+<main class="m-3 text-black">
     <div class="bg-gray-900 shadow-xl rounded-4xl auto-rows-fr h-200 overflow-y-auto min-h-0">
         {{$slot}}
     </div>

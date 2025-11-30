@@ -53,6 +53,24 @@ class ManagerProfilesComponent extends Component
             session()->flash('message', 'Perfil actualizado correctamente.');
         }
     }
+    public function deleteUser()
+    {
+        if ($this->selectedUser) {
+            // Eliminar usuario
+            $this->selectedUser->delete();
+
+            // Limpiar los campos y cerrar el modal
+            $this->reset(['selectedUser', 'name', 'role', 'password']);
+            $this->showUserModal = false;
+
+            // Mensaje de éxito
+            session()->flash('message', 'Usuario eliminado correctamente.');
+
+            // Recargar la lista de usuarios
+            $this->users = User::all();
+        }
+    }
+
 
     public function render()
     {

@@ -1,29 +1,49 @@
-<div class="flex flex-wrap gap-5 justify-center">
+<div class="bg-gray-800 py-12 min-h-screen flex flex-col items-center">
 
-    {{-- LISTA DE USUARIOS --}}
-    @foreach($users->reverse() as $user)
-        <div wire:click="selectUser({{ $user->id }})"
-             class="bg-gray-400 rounded-4xl w-48 h-68 text-black shadow-2xl border-1 m-2 cursor-pointer hover:scale-105 transition-transform">
-            <div
-                class="bg-blue-50 border-2 border-black rounded-full w-40 h-40 mx-auto flex items-center justify-center mt-3 overflow-hidden">
-                <img src="{{ asset($user->avatar) }}" alt="Avatar"
-                     class="rounded-full w-full h-full object-cover">
+    <!-- Título -->
+    <div class="text-5xl text-white mb-12 text-center">
+        Administración de Usuarios
+    </div>
+
+    <!-- Lista de usuarios -->
+    <div class="flex flex-wrap gap-10 justify-center">
+
+        {{-- LISTA DE USUARIOS --}}
+        @foreach($users->reverse() as $user)
+            <div wire:click="selectUser({{ $user->id }})"
+                 class="bg-gray-700 rounded-4xl transition duration-300 transform hover:scale-105 hover:border-blue-500 hover:shadow-2xl hover:bg-gray-600 w-56 h-72 text-white shadow-lg border-2 border-gray-600 m-4 cursor-pointer">
+
+                <!-- Avatar del usuario -->
+                <div class="bg-blue-500 border-4 border-gray-900 rounded-full w-40 h-40 mx-auto items-center justify-center text-white flex flex-col mt-6 shadow-xl">
+                    <img src="{{ $user->avatar ? asset('storage/'.$user->avatar) : asset('images/defautl_avatar.png') }}" alt="Avatar"
+                         class="rounded-full object-cover w-full h-full">
+                </div>
+
+
+                <!-- Nombre de usuario -->
+                <div class="flex flex-col items-center mt-4 font-semibold">
+                    <p class="text-lg">{{ $user->name }}</p>
+                </div>
+
             </div>
+        @endforeach
+    </div>
 
-            <div class="flex flex-col items-center mt-5 font-bold">
-                <p>{{ $user->name }}</p>
-            </div>
-        </div>
-    @endforeach
-
+    <!-- Crear Usuario Button -->
+    <div class="flex flex-col items-center mb-6">
+        <a href="{{route('createUser')}}"
+                class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-200 mb-4">
+            Crear Usuario
+        </a>
+    </div>
 
     {{-- MODAL USUARIO SELECCIONADO --}}
     <flux:modal name="user-selection" wire:model="showUserModal"
-                overlay-class="bg-black bg-opacity-70 backdrop-blur-lg w-1/2">
+                overlay-class="bg-black bg-opacity-70 backdrop-blur-lg w-full">
 
         @if($selectedUser)
             <form wire:submit.prevent="updateProfile"
-                  class="w-full max-w-lg bg-white rounded-3xl shadow-2xl p-12 space-y-8 font-sans">
+                  class="w-full bg-white rounded-3xl shadow-2xl p-12 space-y-8 font-sans text-black">
 
                 <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-4">
                     Editar Perfil
@@ -83,22 +103,23 @@
                 </div>
 
 
-                {{-- BOTÓN --}}
-                <button type="submit"
-                        class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
+                {{-- BOTONES --}}
+                <div class="flex flex-row gap-4">
+                    <button type="submit"
+                            class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
                                text-white py-3 px-6 rounded-xl font-semibold shadow-lg transition-all duration-200">
-                    Actualizar Perfil
-                </button>
+                        Actualizar Perfil
+                    </button>
+
+                    <button wire:click="deleteUser({{ $selectedUser->id }})"
+                            class="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700
+                               text-white py-3 px-6 rounded-xl font-semibold shadow-lg transition-all duration-200">
+                        Eliminar Usuario
+                    </button>
+                </div>
             </form>
         @endif
 
     </flux:modal>
 
-    <div class="flex flex-col items-center mb-6">
-        {{-- BOTÓN CREAR USUARIO --}}
-        <button wire:click="$set('showCreateUserModal', true)"
-                class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-200 mb-4">
-            Crear Usuario
-        </button>
-    </div>
 </div>
