@@ -1,6 +1,21 @@
 <div>
+    <div class="m-5">
+
+
+        @if (session()->has('message'))
+            <div class="bg-green-100 border border-green-400 text-green-800 p-3 rounded-full shadow-md mt-4"
+                 role="alert">
+                <span class="font-medium">{{ session('message') }}</span>
+            </div>
+        @elseif (session()->has('error'))
+            <div class="bg-red-100 border border-red-400 text-red-800 p-3 rounded-full shadow-md mt-4" role="alert">
+                <span class="font-medium">{{ session('error') }}</span>
+            </div>
+        @endif
+    </div>
     @if($productos->isEmpty())
-        <div class="flex flex-col items-center justify-center py-16 bg-gray-50 rounded-3xl shadow-md border border-gray-200">
+        <div
+            class="flex flex-col items-center justify-center py-16 bg-gray-50 rounded-3xl shadow-md border border-gray-200">
             <h2 class="text-xl font-semibold text-gray-700 mb-2">No hay productos disponibles</h2>
             <p class="text-gray-500 text-center px-4">
                 Actualmente no tienes productos registrados en el stock.
@@ -68,14 +83,13 @@
             <!-- Botones de acciones -->
             <div class="mt-6 flex flex-col md:flex-row justify-center items-center gap-4">
 
-                <!-- Exportar Stock -->
                 <button wire:click="exportExcel"
                         class="w-full md:w-auto px-6 py-3 text-white bg-gray-700 rounded-4xl hover:bg-gray-800 transition hover:scale-110 font-semibold">
                     Exportar Stock a Excel
                 </button>
 
 
-                <!-- Importar Stock -->
+
                 <form wire:submit.prevent="importExcel" enctype="multipart/form-data"
                       class="flex flex-col md:flex-row items-center gap-2 w-full md:w-auto">
                     <button type="submit"
@@ -89,18 +103,8 @@
             </div>
 
 
-
         </div>
     @endif
 
-    {{-- Mensajes de sesión --}}
-    @if (session()->has('message'))
-        <div class="bg-green-100 border border-green-400 text-green-800 p-3 rounded-full shadow-md mt-4" role="alert">
-            <span class="font-medium">{{ session('message') }}</span>
-        </div>
-    @elseif (session()->has('error'))
-        <div class="bg-red-100 border border-red-400 text-red-800 p-3 rounded-full shadow-md mt-4" role="alert">
-            <span class="font-medium">{{ session('error') }}</span>
-        </div>
-    @endif
+
 </div>

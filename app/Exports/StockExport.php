@@ -12,11 +12,11 @@ class StockExport implements FromCollection, WithHeadings
     {
         return Stock::with('categoria')
             ->get()
-            ->map(function($stock) {
+            ->map(function ($stock) {
                 return [
                     'nombre' => $stock->nombre,
                     'unidades' => $stock->unidades,
-                    'ID_Categoria' => $stock->categoria->id,
+                    'categoria_id' => $stock->categoria->id,
                     'categoria' => $stock->categoria->nombre,
                     'precio_venta' => $stock->precio_venta,
                     'precio_compra' => $stock->precio_compra,
@@ -27,6 +27,6 @@ class StockExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ['nombre','unidades','ID_Categoria','categoria','precio_venta','precio_compra','descripcion'];
+        return ['nombre', 'unidades', 'categoria_id', 'categoria', 'precio_venta', 'precio_compra', 'descripcion'];
     }
 }

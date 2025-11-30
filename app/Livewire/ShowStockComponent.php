@@ -36,27 +36,21 @@ class ShowStockComponent extends Component
     {
         $this->validate([
             'excelFile' => 'required|file|mimes:xlsx,xls',
-        ], [
-                'excelFile.required' => 'Falta importar el archivo excel',
-                'excelFile.mimes' => 'Solo se permiten formatos xlsx o xls',
-            ]
-
-        );
+        ]);
 
         try {
             Excel::import(new ProductosImport, $this->excelFile);
-            session()->flash('message', '✅ Productos importados correctamente.');
-        } catch (QueryException $e) {
-            $mensajeUsuario = $this->interpretarError($e);
-            session()->flash('error', "❌ Error al importar: $mensajeUsuario");
-            \Log::error('Error al importar productos: ' . $e->getMessage());
+            session()->flash('message', 'Productos importados correctamente.');
+
         } catch (\Exception $e) {
-            session()->flash('error', '❌ Ha ocurrido un error inesperado durante la importación.');
-            \Log::error('Error inesperado al importar productos: ' . $e->getMessage());
+            // Errores lanzados desde ProductosImport
+            session()->flash('error', $e->getMessage());
+
         }
 
         $this->productos = Stock::with('categoria')->get();
     }
+
 
     /**
      * Devuelve un mensaje amigable según el error de MySQL
