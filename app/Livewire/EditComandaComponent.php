@@ -10,8 +10,8 @@ class EditComandaComponent extends Component
     public Comanda $comanda;
 
     public $editando = false;
-    public $cantidades = [];   // Array para manejar cantidad editable
-    public $notasArray = [];   // Array para manejar notas editables
+    public $cantidades = [];
+    public $notasArray = [];
 
     protected $listeners = [
         'refreshComponent' => '$refresh'

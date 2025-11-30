@@ -21,7 +21,7 @@ class ComandaComponent extends Component
     public $stockId;
     public $cantidad;
     public $notas;
-    public $pantalla = 'registrada';
+    public $pantalla = 'comanda';
 
 
 

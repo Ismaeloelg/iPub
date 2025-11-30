@@ -1,67 +1,35 @@
-<div class="h-165">
+<div class="max-w-xl mx-auto p-6 bg-gray-900 min-h-screen">
     <form wire:submit.prevent="guardarCategoria"
-          class="m-auto bg-white rounded-3xl shadow-xl p-8 space-y-6 shadow ">
+          class="bg-gray-800 rounded-2xl shadow-lg p-6 space-y-4">
+        <h1 class="text-3xl font-bold text-white text-center">Crear Categoría</h1>
 
-        <h1 class="text-4xl font-semibold ">
-            Crear Categoría
-        </h1>
-
-        <div class="space-y-2">
-            <label class="block text-gray-700 font-medium">Nombre de la categoría</label>
-
-            <input type="text" wire:model="nombre"
-                   class="w-full rounded-lg border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition p-2.5"
-                   placeholder="Ingrese un nombre">
-
-        </div>
+        <input type="text" wire:model.defer="nombre"
+               placeholder="Nombre de la categoría"
+               class="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
 
         <button type="submit"
-                class="w-full bg-blue-600 text-white font-medium py-2.5 rounded-lg hover:bg-blue-700 transition shadow-md">
-            Guardar Categoría
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold p-3 rounded-lg transition">
+            Guardar
         </button>
+
+        @error('nombre') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
     </form>
 
-
-    <div class="rounded-3xl mt-4 bg-white h-76 overflow-y-auto shadow-lg border border-gray-200">
-
-        <div class="text-xl font-semibold text-gray-700 text-center sticky top-0 bg-white py-3 border-b">
-            Categorías disponibles
-        </div>
-
-
-        <div class="p-4 space-y-2">
-            @if($categorias->isEmpty())
-                <p class="text-gray-500 text-center py-4">No hay categorías registradas.</p>
-            @else
-                @foreach($categorias as $categoria)
-                    <div wire:click="delete({{$categoria->id}})"
-                         class="px-4 py-2 bg-gray-100 hover:bg-blue-100 rounded-lg text-gray-800 transition shadow-sm flex flex-col">
-                        {{ $categoria->nombre }}
-                    </div>
-                @endforeach
-            @endif
+    <div class="mt-6 bg-gray-800 rounded-2xl shadow-lg max-h-64 overflow-y-auto">
+        <h2 class="text-xl font-semibold text-white p-3 border-b border-gray-700 text-center">Categorías</h2>
+        <div class="divide-y divide-gray-700">
+            @forelse($categorias as $categoria)
+                <div wire:click="delete({{$categoria->id}})"
+                     class="p-3 cursor-pointer hover:bg-gray-700 transition text-white">
+                    {{ $categoria->nombre }}
+                </div>
+            @empty
+                <p class="text-gray-400 text-center p-4">No hay categorías registradas.</p>
+            @endforelse
         </div>
     </div>
 
-    @if (session()->has('message'))
-        <div
-            class="bg-green-100 border border-green-400 text-green-800 p-3 rounded-full shadow-md mt-4"
-            role="alert">
-            <span class="font-medium">{{ session('message') }}</span>
-        </div>
-    @elseif (session()->has('error'))
-        <div
-            class="bg-red-100 border border-red-400 text-red-800 p-3 rounded-full shadow-md mt-4"
-            role="alert">
-            <span class="font-medium">{{ session('error') }}</span>
-        </div>
+    @if(session()->has('message'))
+        <p class="mt-4 text-green-400 text-center">{{ session('message') }}</p>
     @endif
-    @error('nombre')
-    <div
-        class="bg-red-100 border border-red-400 text-red-800 p-3 rounded-full shadow-md mt-4">
-        <span class="font-medium">{{ $message }}</span>
-    </div>
-    @enderror
-
 </div>
-

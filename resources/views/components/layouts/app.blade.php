@@ -56,7 +56,7 @@
 
 
 <main class="m-3">
-    <div class="bg-gray-900 shadow-xl rounded-4xl auto-rows-fr h-241 overflow-y-auto min-h-0">
+    <div class="bg-gray-900 shadow-xl rounded-4xl auto-rows-fr h-200 overflow-y-auto min-h-0">
         {{$slot}}
     </div>
 </main>

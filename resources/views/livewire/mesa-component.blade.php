@@ -2,10 +2,10 @@
     <div class="text-3xl font-bold text-white text-center sticky top-0 py-1 bg-gray-700 p-5 shadow-lg rounded z-10">
         Sala
     </div>
-    <div class="grid grid-cols-5 gap-6 p-5 rounded-4xl ">
+    <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6 gap-6 p-5 rounded-4xl ">
         @foreach($mesas as $mesa)
             <div wire:click="abrirMesa({{ $mesa->id }})"
-                 class="cursor-pointer p-5 rounded-4xl shadow-lg transition-transform transform hover:scale-105
+                 class="cursor-pointer p-5 rounded-4xl shadow-lg transition-transform transform hover:scale-110 hover:bg-green-900
                         {{ $mesa->comandas->isNotEmpty() ? 'bg-red-400 text-white' : 'bg-green-600 text-white' }}
                         flex flex-col justify-between items-center">
 
