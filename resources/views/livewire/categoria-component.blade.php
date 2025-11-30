@@ -1,4 +1,4 @@
-<div class="max-w-xl mx-auto p-6 bg-gray-900 min-h-screen">
+<div class="max-w-xl mx-auto p-6 bg-gray-900 ">
     <form wire:submit.prevent="guardarCategoria"
           class="bg-gray-800 rounded-2xl shadow-lg p-6 space-y-4">
         <h1 class="text-3xl font-bold text-white text-center">Crear Categoría</h1>
@@ -19,9 +19,16 @@
         <h2 class="text-xl font-semibold text-white p-3 border-b border-gray-700 text-center">Categorías</h2>
         <div class="divide-y divide-gray-700">
             @forelse($categorias as $categoria)
-                <div wire:click="delete({{$categoria->id}})"
-                     class="p-3 cursor-pointer hover:bg-gray-700 transition text-white">
-                    {{ $categoria->nombre }}
+                <div class="flex justify-between items-center p-3 hover:bg-gray-700 transition text-white">
+                    <div>
+                        <span class="font-semibold">{{ $categoria->id }}.</span>
+                        {{ $categoria->nombre }}
+                    </div>
+                    <button wire:click="delete({{ $categoria->id }})"
+                            class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-sm transition"
+                            onclick="confirm('¿Estás seguro de eliminar esta categoría?') || event.stopImmediatePropagation()">
+                        Eliminar
+                    </button>
                 </div>
             @empty
                 <p class="text-gray-400 text-center p-4">No hay categorías registradas.</p>
@@ -29,7 +36,7 @@
         </div>
     </div>
 
-    @if(session()->has('message'))
+@if(session()->has('message'))
         <p class="mt-4 text-green-400 text-center">{{ session('message') }}</p>
     @endif
 </div>
