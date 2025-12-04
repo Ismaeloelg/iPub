@@ -3,6 +3,7 @@
 use App\Livewire\ComandaComponent;
 use App\Livewire\EditStockComponent;
 use App\Livewire\RemoveStockComponent;
+use App\Livewire\VentasComponent;
 use App\Models\Stock;
 use Illuminate\Support\Facades\Route;
 
@@ -48,3 +49,5 @@ Route::get('/logout', function () {
     session()->forget('logged_user_id');
     return redirect()->route('welcome');
 })->name('logout');
+
+Route::get('/ventas', VentasComponent::class)->name('ventas');
