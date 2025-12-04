@@ -12,13 +12,14 @@ class StockFactory extends Factory
 
     public function definition(): array
     {
+        // Se define aquí por seguridad, pero no se usará random
         return [
-            'nombre' => $this->faker->unique()->word,
-            'precio_venta' => $this->faker->randomFloat(2, 1, 100), // Precio aleatorio
-            'precio_compra' => $this->faker->randomFloat(2, 1, 50),  // Precio de compra aleatorio
-            'unidades' => $this->faker->numberBetween(1, 100), // Unidades disponibles
+            'nombre' => 'Producto por definir',
+            'precio_venta' => $this->faker->randomFloat(2, 100, 500), // Precio aleatorio
+            'precio_compra' => $this->faker->randomFloat(2, 50, 250),
+            'unidades' => $this->faker->numberBetween(10, 100),
             'descripcion' => $this->faker->sentence,
-            'categoria_id' => Categoria::inRandomOrder()->first()->id, // Asocia el producto a una categoría aleatoria
+            'categoria_id' => null, // se asignará en el seeder
         ];
     }
 }

@@ -20,8 +20,8 @@ class CategoriaFactory extends Factory
             'Gin',
             'Vodka',
             'Ron',
-            'Bebidas sin alcohol',
-            'Shots',
+            'Refrescos',
+            'Chupitos',
         ];
 
         return [
