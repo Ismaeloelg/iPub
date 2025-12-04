@@ -23,7 +23,7 @@ class StockComponent extends Component
                 'nombre' => 'required|string|max:50|unique:stocks,nombre',
                 'unidades' => 'required|integer|min:1',
                 'precio_venta' => 'required|numeric|min:1',
-                'precio_compra' => 'required|numeric|min:0',
+                'precio_compra' => 'required|numeric|min:1',
                 'descripcion' => 'nullable|string|max:100',
                 'categoria_id' => 'required|integer|min:1'
             ],

@@ -27,7 +27,7 @@ class CategoriaComponent extends Component
                 if ($e->getCode() == 23000) {
                     session()->flash('error', '❌ Esta Categoria se esta usando');
                 }
-                session()->flash('message', '❌ Categoria no se ha podido eliminar!! ');
+                session()->flash('error', '❌ Categoria no se ha podido eliminar!! ');
             }
         }
         $this->categorias = Categoria::all();
@@ -38,8 +38,8 @@ class CategoriaComponent extends Component
     {
         $this->validate(
             ['nombre' => 'required|unique:categorias,nombre'],
-            ['nombre.required' => ' ❌ El campo nombre es requerido',
-                'nombre.unique' => ' ❌ Esta categoria ya existe'
+            ['nombre.required' => 'El campo nombre es requerido',
+                'nombre.unique' => 'Esta categoria ya existe'
             ]
         );
 

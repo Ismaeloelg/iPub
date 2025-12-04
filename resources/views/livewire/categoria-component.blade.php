@@ -1,6 +1,29 @@
-<div class="max-w-xl mx-auto p-6 bg-gray-900 ">
+<div class="max-w-4xl mx-auto p-6 bg-gray-900 ">
     <form wire:submit.prevent="guardarCategoria"
           class="bg-gray-800 rounded-2xl shadow-lg p-6 space-y-4">
+
+        @if(session()->has('message'))
+            <div
+                x-data="{ show: true }"
+                x-show="show"
+                x-init="setTimeout(() => show = false, 1000)"
+                class="bg-green-700 text-green-100 p-3 rounded-md text-center transition-opacity duration-1000"
+            >
+                {{ session('message') }}
+            </div>
+
+        @endif
+        @if(session()->has('error'))
+
+            <div
+                x-data="{ show: true }"
+                x-show="show"
+                x-init="setTimeout(() => show = false, 1000)"
+                class="bg-red-700 text-red-100 p-3 rounded-md text-center transition-opacity duration-1000"
+            >
+                {{ session('error') }}
+            </div>
+        @endif
         <h1 class="text-3xl font-bold text-white text-center">Crear Categoría</h1>
 
         <input type="text" wire:model.defer="nombre"
@@ -15,7 +38,7 @@
         @error('nombre') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
     </form>
 
-    <div class="mt-6 bg-gray-800 rounded-2xl shadow-lg max-h-64 overflow-y-auto">
+    <div class="mt-6 bg-gray-800 rounded-2xl shadow-lg max-h-100 overflow-y-auto">
         <h2 class="text-xl font-semibold text-white p-3 border-b border-gray-700 text-center">Categorías</h2>
         <div class="divide-y divide-gray-700">
             @forelse($categorias as $categoria)
@@ -26,8 +49,10 @@
                     </div>
                     <button wire:click="delete({{ $categoria->id }})"
                             class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-sm transition"
-                            onclick="confirm('¿Estás seguro de eliminar esta categoría?') || event.stopImmediatePropagation()">
-                        Eliminar
+                    {{--onclick="confirm('¿Estás seguro de eliminar esta categoría?') || event.stopImmediatePropagation()--}}
+                    ">
+
+                    Eliminar
                     </button>
                 </div>
             @empty
@@ -36,7 +61,10 @@
         </div>
     </div>
 
-@if(session()->has('message'))
+    @if(session()->has('message'))
         <p class="mt-4 text-green-400 text-center">{{ session('message') }}</p>
+    @endif
+    @if(session()->has('error'))
+        <p class="mt-4 text-red-400 text-center">{{ session('error') }}</p>
     @endif
 </div>

@@ -17,6 +17,8 @@ class ProfileComponent extends Component
     public $avatarPreview;
     public $role;
     public $password;
+    public $password_confirmation;
+
 
     public function mount()
     {
@@ -26,7 +28,7 @@ class ProfileComponent extends Component
         if ($this->user) {
             $this->name = $this->user->name;
             $this->role = $this->user->role;
-            $this->avatarPreview = $this->user->avatar ? asset('storage/'.$this->user->avatar) : null;
+            $this->avatarPreview = $this->user->avatar ? asset('storage/' . $this->user->avatar) : null;
         }
     }
 
@@ -44,8 +46,18 @@ class ProfileComponent extends Component
         $this->validate([
             'name' => 'required|string|max:255',
             'role' => 'required|in:user,admin',
-            'password' => 'nullable|string|min:6',
-            'avatar' => 'nullable|image|max:1024', // 1MB máximo
+            'avatar' => 'nullable|image|max:1024',
+            'password' => 'nullable|string|min:8|confirmed'
+
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'name.string' => 'El nombre debe ser una cadena de texto.',
+            'name.max' => 'El nombre no debe tener más de 255 caracteres.',
+            'role.required' => 'El rol es obligatorio.',
+            'role.in' => 'El rol debe ser "user" o "admin".',
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.confirmed' => 'Las contraseñas no coinciden.',
         ]);
 
         if ($this->user) {
