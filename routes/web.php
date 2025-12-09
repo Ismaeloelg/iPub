@@ -12,7 +12,7 @@ Route::view('/', 'user')->name('welcome');
 
 
 // RUTAS AUTENTIFICADAS
-Route::middleware(['auth', 'conectar.cliente'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     Route::view('/home', 'home')->name('home');
     // RUTAS ADMIN
@@ -32,10 +32,7 @@ Route::middleware(['auth', 'conectar.cliente'])->group(function () {
 
     });
 
-    // Comandas (clientes normales)
     Route::get('/comanda/{mesa}', ComandaComponent::class)->name('comanda');
-
-    // Perfil de usuario
     Route::view('/profile', 'profile')->name('profile');
 
 });
