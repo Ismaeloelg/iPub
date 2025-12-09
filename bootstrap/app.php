@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AuthMiddleware;
+use App\Http\Middleware\ConectarCliente;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth' => AuthMiddleware::class,
             'role' => RoleMiddleware::class,
+            'conectar.cliente' => ConectarCliente::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
