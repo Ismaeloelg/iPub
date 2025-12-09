@@ -50,4 +50,6 @@ Route::get('/logout', function () {
     return redirect()->route('welcome');
 })->name('logout');
 
-Route::get('/ventas', VentasComponent::class)->name('ventas');
+Route::get('/ventas', VentasComponent::class)
+    ->middleware('auth', 'role:admin')
+    ->name('ventas');

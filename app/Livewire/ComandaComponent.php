@@ -11,20 +11,17 @@ use Livewire\Component;
 
 class ComandaComponent extends Component
 {
+
     public $mesa;
+    public $notas;
+    public $ticket;
+    public $stockId;
+    public $cantidad;
     public $categorias;
+    public $pantalla = 'comanda';
     public $categoriaSeleccionada = null;
     public $productosFiltrados = [];
     public $comandas = [];
-    public $ticket;
-
-    public $stockId;
-    public $cantidad;
-    public $notas;
-    public $pantalla = 'comanda';
-
-
-
 
     protected $listeners = [
         'comandaEliminada' => 'actualizarProductosEliminado',
@@ -78,7 +75,6 @@ class ComandaComponent extends Component
 
         if (!$stock) return;
 
-        // Validar que hay stock disponible
         if ($stock->unidades < 1) {
             session()->flash('mensaje', "No hay stock disponible para este producto.");
             return;
@@ -158,7 +154,6 @@ class ComandaComponent extends Component
                 ->get();
         }
     }
-
 
     public function render()
     {

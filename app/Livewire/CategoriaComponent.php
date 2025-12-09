@@ -10,6 +10,7 @@ class CategoriaComponent extends Component
     public $nombre;
     public $categorias;
 
+
     public function mount()
     {
         $this->categorias = Categoria::all();
@@ -22,12 +23,12 @@ class CategoriaComponent extends Component
         if ($categoria) {
             try {
                 $categoria->delete();
-                session()->flash('message', ' ✅ Categoria eliminada correctamente');
+                session()->flash('message', 'Categoria eliminada correctamente');
             } catch (\Exception $e) {
                 if ($e->getCode() == 23000) {
-                    session()->flash('error', '❌ Esta Categoria se esta usando');
+                    session()->flash('error', 'Esta Categoria se esta usando');
                 }
-                session()->flash('error', '❌ Categoria no se ha podido eliminar!! ');
+                session()->flash('error', 'Categoria no se ha podido eliminar!! ');
             }
         }
         $this->categorias = Categoria::all();
@@ -42,11 +43,9 @@ class CategoriaComponent extends Component
                 'nombre.unique' => 'Esta categoria ya existe'
             ]
         );
-
         Categoria::create(
             ['nombre' => $this->nombre]
         );
-
         return redirect(route('stock'));
     }
 

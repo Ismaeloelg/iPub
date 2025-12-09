@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
-class ManagerProfilesComponent extends Component
+class   ManagerProfilesComponent extends Component
 {
     public $users;
     public $selectedUser = null;

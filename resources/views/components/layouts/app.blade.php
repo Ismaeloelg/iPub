@@ -35,8 +35,10 @@
                      class="absolute right-5 mt-2 w-50 bg-gray-800 rounded-xl shadow-lg py-2 opacity-0 invisible transition-all z-50">
                     <a href="{{route('profile')}}" class="block px-4 py-2 text-white hover:bg-blue-700 hover:h-1/4">Perfil</a>
                     @if($user->hasRole(User::ROLE_ADMIN))
+                        <a href="{{route('ventas')}}"
+                           class="block px-4 py-2 text-white hover:bg-blue-700 hover:h-1/4">Ventas</a>
                         <a href="{{route('manager-profile')}}"
-                           class="block px-4 py-2 text-white hover:bg-blue-700 hover:h-1/4">Administrar Perfil</a>
+                        class="block px-4 py-2 text-white hover:bg-blue-700 hover:h-1/4">Administrar Perfil</a>
                         <a href="{{ route('showStock') }}" class="block px-4 py-2 text-white hover:bg-green-700">Administrar
                             Productos</a>
                         <a href="{{ route('stock') }}" class="block px-4 py-2 text-white hover:bg-green-700">Añadir

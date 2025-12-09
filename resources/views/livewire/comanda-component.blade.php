@@ -12,7 +12,6 @@
         </button>
     </div>
     <div>
-
         @if (session()->has('mensaje'))
             <div
                 x-data="{ show: true }"
@@ -43,7 +42,6 @@
                                     </h3>
                                 </div>
                                 {{-- FIN-CATEGORIAS --}}
-
 
                             @endforeach
                         </div>
